@@ -23,23 +23,29 @@ public class SecondActivity extends AppCompatActivity {
         user = findViewById(R.id.user);
         EditText_browser = findViewById(R.id.EditText_browser);
         Button_visit = findViewById(R.id.Button_visit);
+        //获取界面1跳转
         Intent intent = getIntent();
+        //接收界面1的传递参数，键值对中的健name
         String b = intent.getStringExtra("name");
-        user.setText("欢迎用户："+b);
+
+        user.setText("欢迎："+b+"使用网址访问");
+        user.setTextSize(18);
 
         Button_visit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String urlstr = EditText_browser.getText().toString();
-                if(!urlstr.equals("")){
-                    Log.d("yyj", "onClick: "+urlstr);
+                if(!urlstr.equals("")&&(urlstr.contains("http://")||urlstr.contains("https://"))){
+                    //Log.d("yyj", "onClick: "+urlstr);
                     Intent intent = new Intent (Intent.ACTION_VIEW, Uri.parse(urlstr));
                     startActivity(intent);
                 }
                 else {
-                    urlstr = "http://www.baidu.com";
-                    Intent intent = new Intent (Intent.ACTION_VIEW, Uri.parse(urlstr));
-                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(),"网址输入不能为空或者输入错误",Toast.LENGTH_SHORT).show();
+                    //EditText_browser.setText("输入不合法，请重新输入");
+//                    urlstr = "http://www.baidu.com";
+//                    Intent intent = new Intent (Intent.ACTION_VIEW, Uri.parse(urlstr));
+//                    startActivity(intent);
                 }
             }
         });
